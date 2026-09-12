@@ -1,0 +1,280 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "file_scan_exclusions_enabled": true,
+  "disable_ai": true,
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
+  // Zed's built-in icons are monochrome. Material Icon Theme gives a distinct
+  // color per language plus colored named-folder icons (src, test, config...).
+  // Swap to "Catppuccin Macchiato" for the pastel set -- both are installed.
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
+
+  // Pulled from the extension registry at STARTUP (not on settings reload).
+  "auto_install_extensions": {
+    "material-icon-theme": true,
+    "catppuccin-icons": true,
+    "kotlin": true,
+    "java": true
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "base_keymap": "VSCode",
+
+  // --- Fonts ---
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_size": 15,
+  "buffer_font_features": {
+    "calt": true,
+    "liga": true
+  },
+  "buffer_line_height": {
+    "custom": 1.5
+  },
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_size": 15,
+  "terminal": {
+    "font_family": "JetBrains Mono",
+    "font_size": 14,
+    "dock": "bottom",
+    "default_height": 320,
+    "button": true,
+    "tab_bar_position": "right"
+  },
+
+  // --- Transparency ---
+  // "blurred" = acrylic blur behind window, "transparent" = raw see-through,
+  // "opaque" = off. Declared here AND inside theme_overrides below; Zed has
+  // accepted it in both places across versions.
+  "background.appearance": "blurred",
+
+  // --- Theme ---
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Macchiato",
+    "dark": "Catppuccin Macchiato"
+  },
+
+  // Alpha on the surface colors is what actually makes the window see-through.
+  // Last two hex digits = opacity (cc ~= 80%, b3 ~= 70%, 99 ~= 60%).
+  "experimental.theme_overrides": {
+    "background.appearance": "blurred",
+
+    // Black, not Catppuccin's navy. This is the only layer with alpha, and it
+    // sits ON TOP of the acrylic blur, so lowering it reveals more blur.
+    // b3 = 70%. Raise toward ff for less see-through, lower (59 = ~35%) for more.
+    "background": "#000000b3",
+
+    // GPUI ADDS the alpha of stacked layers (zed#55972), so a value here is
+    // extra opacity on top of "background" above -- not an absolute amount.
+    // 00 = show the window background as-is, higher = that strip gets denser.
+    "editor.background": "#00000000",
+    "editor.gutter.background": "#00000000",
+    "terminal.background": "#00000000",
+
+    // Top and bottom chrome: small extra alpha so the title bar, tab strip and
+    // status bar read as solid trim instead of floating see-through edges.
+    "title_bar.background": "#00000059",
+    "title_bar.inactive_background": "#00000059",
+    "tab_bar.background": "#00000047",
+    "tab.inactive_background": "#00000000",
+    "tab.active_background": "#00000033",
+    "toolbar.background": "#00000033",
+    "status_bar.background": "#00000059",
+
+    // Side panels: every layer fully transparent. Any alpha here stacks with
+    // the scroll container's own layer, so the strip holding the file entries
+    // ends up a different density than the empty space below it -- a visible
+    // seam. Zero on all of them means one uniform window background.
+    "panel.background": "#00000000",
+    "surface.background": "#00000000",
+
+    // List rows (project panel entries, pickers). Catppuccin ships these fully
+    // opaque (#181926 / #1e2030), which is what painted a solid black box under
+    // every file entry. Transparent base, translucent white for the states.
+    "element.background": "#00000000",
+    "element.hover": "#ffffff14",
+    "element.active": "#ffffff26",
+    "element.selected": "#ffffff1f",
+    "element.disabled": "#00000000",
+    "ghost_element.background": "#00000000",
+    "ghost_element.hover": "#ffffff14",
+    "ghost_element.active": "#ffffff26",
+    "ghost_element.selected": "#ffffff1f",
+    "ghost_element.disabled": "#00000000",
+    "panel.overlay_background": "#00000000",
+    "panel.overlay_hover": "#ffffff14",
+    "drop_target.background": "#ffffff1a",
+
+    // Popups, menus and the command palette stay fully opaque black, otherwise
+    // they are unreadable over wallpaper.
+    "elevated_surface.background": "#0c0c0cff",
+
+    "editor.active_line.background": "#ffffff0d"
+  },
+
+  // --- Hidden from the file tree (and from search/file finder) ---
+  // This setting REPLACES Zed's defaults, so the built-in entries are repeated
+  // here. Drop a line to make that folder visible again.
+  "file_scan_exclusions": [
+    // Zed defaults
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+
+    // Python
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/.pytest_cache",
+    "**/.mypy_cache",
+    "**/.ruff_cache",
+    "**/.venv",
+    "**/venv",
+    "**/*.egg-info",
+
+    // Node / JS deps
+    "**/node_modules",
+    "**/.pnpm-store",
+    "**/.yarn/cache",
+
+    // Next.js / React / bundler build output
+    "**/.next",
+    "**/out",
+    "**/build",
+    "**/dist",
+    "**/.turbo",
+    "**/.vercel",
+    "**/.parcel-cache",
+    "**/.svelte-kit",
+    "**/.cache",
+    "**/coverage"
+  ],
+
+  // --- Left sidebar: file tree ---
+  "project_panel": {
+    "button": true,
+    "dock": "left",
+    "default_width": 280,
+    "entry_spacing": "comfortable",
+    "file_icons": true,
+    "git_status": true,
+    "indent_size": 18,
+    "indent_guides": {
+      "show": "always"
+    },
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "show_diagnostics": "all",
+    "scrollbar": {
+      "show": "auto"
+    },
+    "sticky_scroll": true,
+    "starts_open": true
+  },
+
+  // Other left-dock panels so they don't fight the file tree for space.
+  "outline_panel": {
+    "dock": "left",
+    "default_width": 280
+  },
+  "git_panel": {
+    "dock": "left",
+    "default_width": 300
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "default_width": 420
+  },
+
+  // --- Java / Kotlin diagnostics ---
+  // Both get their linting from their language server, so the extensions above
+  // are what actually turn diagnostics on.
+  "lsp": {
+    // JDTLS needs a JDK 21+; JAVA_HOME points at Temurin 25 on this machine.
+    "jdtls": {
+      "settings": {
+        "java_home": "C:/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot",
+        "lombok_support": true
+      },
+      "initialization_options": {
+        "settings": {
+          "java": {
+            "errors": {
+              "incompleteClasspath": {
+                "severity": "warning"
+              }
+            },
+            "format": {
+              "enabled": true
+            },
+            "saveActions": {
+              "organizeImports": true
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "languages": {
+    "Java": {
+      "format_on_save": "on",
+      "tab_size": 4
+    },
+    "Kotlin": {
+      // Default server is JetBrains' kotlin-lsp; swap for the community one with
+      // ["kotlin-language-server", "!kotlin-lsp", "..."] if it misbehaves.
+      "format_on_save": "on",
+      "tab_size": 4
+    }
+  },
+
+  // --- Editor niceties that pair with the tree ---
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+
+  // Kills the back/forward arrows at the left of the tab strip. Navigation
+  // history still works via ctrl-- / ctrl-shift-- , just without the buttons.
+  "tab_bar": {
+    "show_nav_history_buttons": false,
+    // Right-side group: new-file "+", split, and zoom. Zed has no per-button
+    // flag, so this drops all three. Split is ctrl-k ctrl-\ , zoom ctrl-k z.
+    "show_tab_bar_buttons": false
+  },
+  "indent_guides": {
+    "enabled": true
+  },
+  "scrollbar": {
+    "show": "auto"
+  }
+}
