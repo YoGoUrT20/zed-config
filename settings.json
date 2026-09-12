@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  // Fork build: block the official auto-updater from overwriting Zed.exe
+  "auto_update": false,
   "file_scan_exclusions_enabled": true,
   "disable_ai": true,
   "agent_servers": {
@@ -121,7 +123,15 @@
     "ghost_element.active": "#ffffff26",
     "ghost_element.selected": "#ffffff1f",
     "ghost_element.disabled": "#00000000",
-    "panel.overlay_background": "#00000000",
+    // Sticky (pinned) folder rows at the top of the file tree. These float OVER
+    // the entries scrolling underneath, so unlike the panel layers above they
+    // have to be opaque or the file names bleed through them. Zed normally
+    // derives this as an opaque "panel.background"; zeroing it here is what made
+    // them see-through. Matches "elevated_surface.background" below.
+    "panel.overlay_background": "#0c0c0cff",
+    // Left translucent on purpose: the editor's multibuffer header paints this
+    // as an overlay quad. The project panel composites it over the opaque
+    // overlay background instead of replacing it.
     "panel.overlay_hover": "#ffffff14",
     "drop_target.background": "#ffffff1a",
 
@@ -260,7 +270,13 @@
   // --- Editor niceties that pair with the tree ---
   "tabs": {
     "file_icons": true,
-    "git_status": true
+    "git_status": true,
+    // Always show the parent directory next to the file name, not only when two
+    // open tabs share a name.
+    "show_parent_directory": true,
+    // Accent gradient along the top edge of the active tab. Runs from
+    // "text.accent" to the first player cursor color of the active theme.
+    "active_tab_accent": true
   },
 
   // Kills the back/forward arrows at the left of the tab strip. Navigation

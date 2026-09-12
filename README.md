@@ -9,19 +9,26 @@ full file, copied from `%APPDATA%\Zed\settings.json` on Windows
 ## Fork-only settings
 
 > [!IMPORTANT]
-> Two settings in this file are **not part of upstream Zed** — they come from
+> Four settings in this file are **not part of upstream Zed** — they come from
 > my own [fork](https://github.com/YoGoUrT20/zed). Upstream Zed ignores unknown
-> keys, so dropping this config into a stock build is harmless; those two just
-> do nothing.
+> keys, so dropping this config into a stock build is harmless; those four
+> just do nothing.
 
 | Setting | What it does |
 | --- | --- |
 | `file_scan_exclusions_enabled` | Master on/off switch for the `file_scan_exclusions` globs — an "ignored files toggle". Bound to a keybind (`project_panel::ToggleFileScanExclusions`) so excluded paths can be shown again without editing the glob list. Turning it off triggers a worktree rescan; VCS dirs (`.git`, `.svn`, `.hg`, `.jj`, `.sl`, `.repo`, `CVS`) stay excluded either way. |
 | `terminal.tab_bar_position` | Where the terminal tabs live inside the terminal panel. `top` is the stock horizontal bar; `left`/`right` give a **vertical tab list** of all terminals beside the panes, like VS Code. I use `right`. |
+| `tabs.show_parent_directory` | Always prints the parent directory under the file name on a tab. Stock Zed only adds that subtitle to disambiguate when two open tabs share a file name; this pins it on for every tab. |
+| `tabs.active_tab_accent` | Draws a 2px gradient strip along the top edge of the active tab, running from the theme's `text.accent` to its first player cursor color. On a theme where those two are the same hue (Catppuccin Macchiato, for one) it reads near-monotone — override `text.accent` to get a visible ramp. |
 
 Everything else below is plain upstream Zed.
 
 ## What's in the config
+
+### Updates
+
+`auto_update: false` — this is a fork build, so the official updater must not
+overwrite `Zed.exe`.
 
 ### AI
 
@@ -31,7 +38,8 @@ registers `opencode` for when it is wanted explicitly.
 ### Appearance
 
 - **Theme**: Catppuccin Macchiato, dark mode locked (light and dark both point
-  at the same theme).
+  at the same theme). The fork also bundles a **Cyber Glass** theme (near-black
+  editor, purple/cyan accents) built to pair with the two tab settings above.
 - **Icons**: Material Icon Theme — colored per-language icons and colored
   named-folder icons, unlike Zed's monochrome built-ins. Catppuccin Icons is
   installed as an alternative.
@@ -52,6 +60,16 @@ registers `opencode` for when it is wanted explicitly.
     every file-tree entry; transparent base plus translucent white hover/active
     states fixes it and avoids a visible seam between the panel and its scroll
     container.
+  - **`panel.overlay_background` is the one panel color that must stay opaque**
+    (`#0c0c0cff`). It backs the sticky/pinned parent-folder rows at the top of
+    the file tree, which float *over* the entries scrolling underneath — zero it
+    and the file names bleed straight through them. Zed normally derives it as
+    an opaque `panel.background`, so the transparency only appears once it is
+    overridden by hand.
+  - `panel.overlay_hover` stays translucent (`#ffffff14`) on purpose: the
+    editor's multibuffer header paints it as a real overlay quad. The fork
+    composites it over the opaque overlay background in the project panel
+    instead of replacing it, so the sticky rows stay solid on hover.
   - Popups and the command palette stay fully opaque — unreadable over wallpaper
     otherwise.
 
