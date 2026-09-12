@@ -64,10 +64,13 @@ registers `opencode` for when it is wanted explicitly.
   compete with the file tree for space. Agent panel right, 420px.
 - **Terminal** docked bottom, 320px tall, tabs on the right (fork setting above).
 - **Tab bar**: nav history buttons and the right-side button group (new file,
-  split, zoom) both hidden. Those still work via
-  <kbd>ctrl</kbd>-<kbd>-</kbd> / <kbd>ctrl</kbd>-<kbd>shift</kbd>-<kbd>-</kbd>,
-  <kbd>ctrl</kbd>-<kbd>k</kbd> <kbd>ctrl</kbd>-<kbd>\</kbd> and
-  <kbd>ctrl</kbd>-<kbd>k</kbd> <kbd>z</kbd>.
+  split, zoom) both hidden. The actions still work by keybind:
+
+  | Action | Keybind |
+  | --- | --- |
+  | Navigate back / forward | `ctrl--` / `ctrl-shift--` |
+  | Split pane | `ctrl-k ctrl-\` |
+  | Zoom pane | `ctrl-k z` |
 
 ### File scanning
 
